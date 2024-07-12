@@ -17,13 +17,14 @@ function App() {
   const [loaderVisible, setLoaderVisible] = useState(false);
   const [morePhotosAvailable, setMorePhotosAvailable] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const perPage = 12;
 
   useEffect(() => {
     if (query === "") return;
     setLoaderVisible(true);
     (async () => {
       try {
-        const { data } = await getPhotos(query, page);
+        const { data } = await getPhotos(query, page, perPage);
         setPhotos([...photos, ...data.hits]);
         setMorePhotosAvailable(data.totalHits - page * perPage > 0);
         if (data.totalHits === 0) toast("no results");
